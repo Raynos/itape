@@ -19,6 +19,7 @@ if (formatStack) {
     require('format-stack');
 }
 
+var resolve = require('resolve');
 var whiteList = env.ITAPE_NPM_TAPE_WHITELIST;
 if (whiteList) {
     whiteList = JSON.parse(whiteList);
@@ -28,7 +29,10 @@ if (whiteList) {
 require(testProgram);
 
 function instrumentTape(whiteList) {
-    var tapeTest = require('tape/lib/test');
+    var tapeTestFile = resolve.sync('tape/lib/test', {
+        basedir: process.cwd()
+    });
+    var tapeTest = require(tapeTestFile);
 
     var $run = tapeTest.prototype.run;
     tapeTest.prototype.run = function fakeRun() {
