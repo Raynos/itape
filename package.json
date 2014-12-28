@@ -27,7 +27,7 @@
     "process": "^0.10.0",
     "readable-stream": "^1.0.33",
     "resolve": "^1.0.0",
-    "tap-out": "^1.0.0",
+    "tap-out": "git://github.com/Raynos/tap-out#support-stack",
     "xtend": "^4.0.0"
   },
   "devDependencies": {
