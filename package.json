@@ -1,6 +1,6 @@
 {
   "name": "itape",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Interactive tape test runner",
   "keywords": [],
   "author": "Raynos <raynos2@gmail.com>",
@@ -42,7 +42,7 @@
     }
   ],
   "scripts": {
-    "test": "npm run jshint -s && NODE_ENV=test node test/index.js | tap-spec",
+    "test": "npm run jshint -s",
     "unit-test": "NODE_ENV=test node test/index.js | tap-spec",
     "jshint-pre-commit": "jshint --verbose $(git diff --cached --name-only | grep '\\.js$')",
     "jshint": "jshint --verbose .",
