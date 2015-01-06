@@ -8,9 +8,11 @@ var testProgram = env.ITAPE_NPM_TEST_PROGRAM;
 var leakedHandles = env.ITAPE_NPM_LEAKED_HANDLES;
 if (leakedHandles) {
     leakedHandles = JSON.parse(leakedHandles);
-    leakedHandles = typeof leakedHandles === 'object' ?
-        leakedHandles : {};
-    require('leaked-handles').set(leakedHandles);
+
+    var leakedHandlesModule = require('leaked-handles');
+    if (typeof leakedHandles === 'object') {
+        leakedHandlesModule.set(leakedHandles);
+    }
 }
 
 var formatStack = env.ITAPE_NPM_FORMAT_STACK;
