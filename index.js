@@ -42,16 +42,16 @@ function main(argv) {
         return context.spawnTest();
     }
 
-    // - if tap-output contains no fails, run normal
-    if (context.tapOutput.fail.length === 0) {
-        printMode('normal', 'no failing tests');
-        return context.spawnTest();
-    }
-
     // - if `--trace` then turn on tracing
     if (context.options.trace) {
         printMode('trace', 'trace flag');
         traceMode(context);
+    }
+
+    // - if tap-output contains no fails, run normal
+    if (context.tapOutput.fail.length === 0) {
+        printMode('normal', 'no failing tests');
+        return context.spawnTest();
     }
 
     // - if `--debug` then turn on debug
