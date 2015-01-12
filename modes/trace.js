@@ -36,5 +36,6 @@ function traceMode(ctx) {
             ITAPE_NPM_FORMAT_STACK:
                 JSON.stringify(traceConfig.formatStack)
         });
+        ctx.setCLIArg('color', true);
     }
 }

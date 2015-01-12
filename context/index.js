@@ -29,6 +29,7 @@ function Context(argv) {
     this._stdoutFilter = null;
     this._debugMode = false;
     this._breakpoints = null;
+    this._argv = [];
 
     this._lastFilePathFile = path.join(cacheFolder,
         'last-run-file.log');
@@ -52,6 +53,10 @@ function Context(argv) {
 }
 
 var proto = Context.prototype;
+
+proto.setCLIArg = function setCLIArg(key, value) {
+    this._argv = this._argv.concat(['--' + key, value]);
+};
 
 proto.setTestEnvironment = function setTestEnvironment(obj) {
     mutableExtend(this._extraEnv, obj);
@@ -83,7 +88,7 @@ function startChildTest(ctx) {
     // trick eslint.
     var $process = process;
 
-    var args = [testRunner];
+    var args = [testRunner].concat(ctx._argv);
     if (ctx._debugMode) {
         args.unshift('debug');
     }
