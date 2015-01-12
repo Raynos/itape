@@ -31,7 +31,8 @@ You should configure it like:
       "debuglog": [
         "typedrequesthandler"
       ],
-      "leakedHandles": true
+      "leakedHandles": true,
+      "formatStack": true
     }
   }
 ```
