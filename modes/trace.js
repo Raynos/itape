@@ -13,6 +13,11 @@ function traceMode(ctx) {
     var itapeConfig = packageJson.itape || {};
     var traceConfig = itapeConfig.trace || {};
 
+    // null out traceConfig if not opted into trace
+    if (!ctx.options.trace) {
+        traceConfig = {};
+    }
+
     if (traceConfig.debuglog) {
         ctx.setTestEnvironment({
             NODE_DEBUG: ($process.env.NODE_DEBUG || '') + ' ' +
@@ -21,18 +26,9 @@ function traceMode(ctx) {
     }
 
     if (traceConfig.leakedHandles || ctx.options.leakedHandles) {
-        var leakedHandlesValue = null;
-        if (traceConfig.leakedHandles) {
-            leakedHandlesValue = JSON.stringify(
-                traceConfig.leakedHandles
-            );
-        }
-        if (ctx.options.leakedHandles === true) {
-            leakedHandlesValue = 'true';
-        }
-        if (typeof ctx.options.leakedHandles === 'string') {
-            leakedHandlesValue = ctx.options.leakedHandles;
-        }
+        var leakedHandlesValue = configOrCli(
+            traceConfig.leakedHandles, ctx.options.leakedHandles
+        );
 
         ctx.setTestEnvironment({
             ITAPE_NPM_LEAKED_HANDLES: leakedHandlesValue
@@ -40,18 +36,9 @@ function traceMode(ctx) {
     }
 
     if (traceConfig.formatStack || ctx.options.formatStack) {
-        var formatStackValue = null;
-        if (traceConfig.formatStack) {
-            formatStackValue = JSON.stringify(
-                traceConfig.formatStack
-            );
-        }
-        if (ctx.options.formatStack === true) {
-            formatStackValue = 'true';
-        }
-        if (typeof ctx.options.formatStack === 'string') {
-            formatStackValue = ctx.options.formatStack;
-        }
+        var formatStackValue = configOrCli(
+            traceConfig.formatStack, ctx.options.formatStack
+        );
 
         ctx.setTestEnvironment({
             ITAPE_NPM_FORMAT_STACK: formatStackValue
@@ -60,3 +47,19 @@ function traceMode(ctx) {
     }
 }
 
+function configOrCli(configValue, cliValue) {
+    var jsonValue = null;
+    if (configValue) {
+        jsonValue = JSON.stringify(
+            configValue
+        );
+    }
+    if (cliValue === true) {
+        jsonValue = 'true';
+    }
+    if (typeof cliValue === 'string') {
+        jsonValue = cliValue;
+    }
+
+    return jsonValue;
+}
