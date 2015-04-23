@@ -58,6 +58,30 @@ For example:
     with the node CLI debugger and set a break point on every
     failed assertion
 .P
+\fB\-\-leaked\-handles[=<opts>]\fR
+    Runs your tests with the \fBleaked\-handles\fR module included\.
+.P
+.RS 2
+.nf
+You can pass a value to configure `leaked\-handles` itself\.
+For example:
+
+itape \-\-leaked\-handles='{"fullStack": true, "timeout": 1000, "debugSockets": true}' test/index\.js
+.fi
+.RE
+.P
+\fB\-\-format\-stack[=<opts>]\fR
+    Runs your tests with the \fBformat\-stack\fR module included\.
+.P
+.RS 2
+.nf
+You can pass a value to configure `format\-stack` itself\.
+For example:
+
+itape \-\-format\-stack='{"traces":"long"}' test/index\.js
+.fi
+.RE
+.P
 \fB\-\-help\fR
     Displays help information
 .P

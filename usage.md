@@ -51,6 +51,22 @@ and a tracing mode.
     with the node CLI debugger and set a break point on every
     failed assertion
 
+`--leaked-handles[=<opts>]`
+    Runs your tests with the `leaked-handles` module included.
+
+    You can pass a value to configure `leaked-handles` itself.
+    For example:
+
+    itape --leaked-handles='{"fullStack": true, "timeout": 1000, "debugSockets": true}' test/index.js
+
+`--format-stack[=<opts>]`
+    Runs your tests with the `format-stack` module included.
+
+    You can pass a value to configure `format-stack` itself.
+    For example:
+
+    itape --format-stack='{"traces":"long"}' test/index.js
+
 `--help`
     Displays help information
 
