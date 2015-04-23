@@ -14,6 +14,7 @@
   "bin": {
     "itape": "./index.js"
   },
+  "man": "./man/itape.1",
   "contributors": [
     {
       "name": "Raynos"
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "jshint": "^2.5.0",
+    "marked-man": "^0.1.4",
     "pre-commit": "0.0.5",
     "tap-spec": "^0.1.8"
   },
@@ -42,6 +44,7 @@
     }
   ],
   "scripts": {
+    "man": "bash scripts/create-man.sh",
     "test": "npm run jshint -s",
     "unit-test": "NODE_ENV=test node test/index.js | tap-spec",
     "jshint-pre-commit": "jshint --verbose $(git diff --cached --name-only | grep '\\.js$')",

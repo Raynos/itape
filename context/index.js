@@ -38,7 +38,9 @@ function Context(argv) {
     this.options = {
         trace: argv.trace,
         fail: argv.fail,
-        debug: argv.debug
+        debug: argv.debug,
+        shortHelp: argv.h,
+        help: argv.help
     };
     this.testProgram = argv._[0];
     this.lastFilePath = safeReadFile(this._lastFilePathFile);

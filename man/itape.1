@@ -1,0 +1,75 @@
+.TH "ITAPE" "1" "April 2015" "v1.5.0" "itape"
+.SH "NAME"
+\fBitape\fR \- modal test runner
+.SH SYNOPSIS
+.P
+\fBitape\fR [\-\-help] [\-\-fail] [\-\-trace] [\-\-debug]
+      [\-h] <file>
+.SH DESCRIPTION
+.P
+\fBitape\fR is a modal test runner\. It works exactly like \fBnode\fR and
+is instrumented to support the \fBtape\fR testing framework\.
+.P
+It supports multiple modes; a failure mode; a debugging mode
+and a tracing mode\.
+.SH EXAMPLES
+.RS 0
+.IP \(bu 2
+\fBitape test/index\.js\fR
+.IP \(bu 2
+\fBitape \-\-fail test/index\.js\fR
+.IP \(bu 2
+\fBitape \-\-trace test/index\.js\fR
+
+.RE
+.SH OPTIONS
+.P
+\fB\-\-fail\fR
+    Runs your tests in failure mode\. \fBitape\fR will only run test
+    blocks that failed last time\. It also filters out all TAP
+    noise and only shows \fBnot ok\fR\|\.
+.P
+\fB\-\-trace\fR
+    Runs your test in trace mode\. Trace mode implies failure mode\.
+    Trace mode is defined by your package\.json \fB"itape"\fR 
+    configuration\.
+.P
+.RS 2
+.nf
+For example:
+
+```
+  "itape": {
+    "trace": {
+      "debuglog": [
+        "typedrequesthandler"
+      ],
+      "leakedHandles": true,
+      "formatStack": true
+    }
+  }
+```
+.fi
+.RE
+.P
+\fB\-\-debug\fR
+    Runs your tests in debug mode\. Debug mode implies failure mode\.
+    When your program is running in debug mode we run your process
+    with the node CLI debugger and set a break point on every
+    failed assertion
+.P
+\fB\-\-help\fR
+    Displays help information
+.P
+\fB\-h\fR
+    Displays short help
+.SH BUGS
+.P
+Please report any bugs to http://github\.com/Raynos/itape
+.SH LICENCE
+.P
+MIT Licenced
+.SH SEE ALSO
+.P
+\fBtape(1), node\.js(1)\fR
+

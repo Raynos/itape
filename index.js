@@ -2,12 +2,27 @@
 
 'use strict';
 
+var console = require('console');
+var path = require('path');
+var process = require('process');
 var parseArgs = require('minimist');
+var spawn = require('child_process').spawn;
 
 var Context = require('./context/');
 var failMode = require('./modes/fail.js');
 var traceMode = require('./modes/trace.js');
 var debugMode = require('./modes/debug.js');
+
+module.exports = main;
+
+if (require.main === module) {
+    main(parseArgs(process.argv.slice(2), {
+        boolean: [
+            'fail', 'trace', 'debug', 'help', 'h'
+        ]
+    }));
+}
+
 
 /*Usage
 
@@ -23,11 +38,20 @@ We only write TAP output when we are done.
 */
 
 function main(argv) {
+    /*eslint max-complexity: [2, 15]*/
+    /*eslint max-statements: [2, 25]*/
     var context = Context(argv);
+
+    if (context.options.shortHelp) {
+        return printShortHelp();
+    }
+    if (context.options.help) {
+        return printHelp();
+    }
 
     // - if no filename, just bail.
     if (!context.testProgram) {
-        return null;
+        return printShortHelp();
     }
 
     // - if no last-run-file, run normal
@@ -76,9 +100,22 @@ function main(argv) {
 }
 
 function printMode(mode, reason) {
+    /*eslint no-console: 0*/
     console.log('[itape]: ' + mode + ' mode (' + reason + ')');
 }
 
-if (require.main === module) {
-    main(parseArgs(process.argv.slice(2)));
+function printShortHelp() {
+    console.log('usage: itape [--help] [--fail] [--trace] [--debug]');
+    console.log('             [-h] <file>');
+}
+
+function printHelp() {
+    var options = {
+        cwd: process.cwd(),
+        env: process.env,
+        setsid: false,
+        customFds: [0, 1, 2]
+    };
+
+    spawn('man', [path.join(__dirname, 'man', 'itape.1')], options);
 }
