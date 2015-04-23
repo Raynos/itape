@@ -32,7 +32,9 @@
     "xtend": "^4.0.0"
   },
   "devDependencies": {
+    "format-stack": "^4.0.0",
     "jshint": "^2.5.0",
+    "leaked-handles": "^5.2.0",
     "marked-man": "^0.1.4",
     "pre-commit": "0.0.5",
     "tap-spec": "^0.1.8"

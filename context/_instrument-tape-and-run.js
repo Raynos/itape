@@ -1,6 +1,7 @@
 'use strict';
 
-var $process = require('process');
+/*global process*/
+var $process = process;
 
 var env = $process.env;
 var testProgram = env.ITAPE_NPM_TEST_PROGRAM;
@@ -18,7 +19,15 @@ if (leakedHandles) {
 var formatStack = env.ITAPE_NPM_FORMAT_STACK;
 if (formatStack) {
     formatStack = JSON.parse(formatStack);
-    require('format-stack');
+
+    var formatStackModule = require('format-stack');
+    if (typeof formatStack === 'object') {
+        formatStackModule.set(formatStack);
+    } else {
+        formatStackModule.set({
+            traces: 'short'
+        });
+    }
 }
 
 var resolve = require('resolve');

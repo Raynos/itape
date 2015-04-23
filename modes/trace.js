@@ -5,19 +5,13 @@ var $process = require('process');
 module.exports = traceMode;
 
 function traceMode(ctx) {
+    /*eslint complexity: [2, 15]*/
+    /*eslint max-statements: [2, 35]*/
     var packageFile = ctx.packageFile;
     var packageJson = require(packageFile);
 
-    if (!packageJson.itape) {
-        return;
-    }
-
-    var itapeConfig = packageJson.itape;
-    var traceConfig = itapeConfig.trace;
-
-    if (!traceConfig) {
-        return;
-    }
+    var itapeConfig = packageJson.itape || {};
+    var traceConfig = itapeConfig.trace || {};
 
     if (traceConfig.debuglog) {
         ctx.setTestEnvironment({
@@ -25,17 +19,44 @@ function traceMode(ctx) {
                 traceConfig.debuglog.join(' ')
         });
     }
-    if (traceConfig.leakedHandles) {
+
+    if (traceConfig.leakedHandles || ctx.options.leakedHandles) {
+        var leakedHandlesValue = null;
+        if (traceConfig.leakedHandles) {
+            leakedHandlesValue = JSON.stringify(
+                traceConfig.leakedHandles
+            );
+        }
+        if (ctx.options.leakedHandles === true) {
+            leakedHandlesValue = 'true';
+        }
+        if (typeof ctx.options.leakedHandles === 'string') {
+            leakedHandlesValue = ctx.options.leakedHandles;
+        }
+
         ctx.setTestEnvironment({
-            ITAPE_NPM_LEAKED_HANDLES:
-                JSON.stringify(traceConfig.leakedHandles)
+            ITAPE_NPM_LEAKED_HANDLES: leakedHandlesValue
         });
     }
-    if (traceConfig.formatStack) {
+
+    if (traceConfig.formatStack || ctx.options.formatStack) {
+        var formatStackValue = null;
+        if (traceConfig.formatStack) {
+            formatStackValue = JSON.stringify(
+                traceConfig.formatStack
+            );
+        }
+        if (ctx.options.formatStack === true) {
+            formatStackValue = 'true';
+        }
+        if (typeof ctx.options.formatStack === 'string') {
+            formatStackValue = ctx.options.formatStack;
+        }
+
         ctx.setTestEnvironment({
-            ITAPE_NPM_FORMAT_STACK:
-                JSON.stringify(traceConfig.formatStack)
+            ITAPE_NPM_FORMAT_STACK: formatStackValue
         });
         ctx.setCLIArg('color', true);
     }
 }
+

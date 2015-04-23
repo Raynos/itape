@@ -40,7 +40,9 @@ function Context(argv) {
         fail: argv.fail,
         debug: argv.debug,
         shortHelp: argv.h,
-        help: argv.help
+        help: argv.help,
+        leakedHandles: argv['leaked-handles'],
+        formatStack: argv['format-stack']
     };
     this.testProgram = argv._[0];
     this.lastFilePath = safeReadFile(this._lastFilePathFile);

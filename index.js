@@ -18,7 +18,8 @@ module.exports = main;
 if (require.main === module) {
     main(parseArgs(process.argv.slice(2), {
         boolean: [
-            'fail', 'trace', 'debug', 'help', 'h'
+            'fail', 'trace', 'debug', 'help', 'h',
+            'leaked-handles', 'format-stack'
         ]
     }));
 }
@@ -67,7 +68,10 @@ function main(argv) {
     }
 
     // - if `--trace` then turn on tracing
-    if (context.options.trace) {
+    if (context.options.trace ||
+        context.options.leakedHandles ||
+        context.options.formatStack
+    ) {
         printMode('trace', 'trace flag');
         traceMode(context);
     }
@@ -106,6 +110,7 @@ function printMode(mode, reason) {
 
 function printShortHelp() {
     console.log('usage: itape [--help] [--fail] [--trace] [--debug]');
+    console.log('             [--leaked-handles[=<opts>] [--format-stack[=<opts>]]');
     console.log('             [-h] <file>');
 }
 
