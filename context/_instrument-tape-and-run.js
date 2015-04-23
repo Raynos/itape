@@ -7,7 +7,7 @@ var path = require('path');
 
 var env = $process.env;
 var testProgram = env.ITAPE_NPM_TEST_PROGRAM;
-var baseDir = path.basename(testProgram);
+var baseDir = path.dirname(testProgram);
 
 var leakedHandles = env.ITAPE_NPM_LEAKED_HANDLES;
 if (leakedHandles) {
