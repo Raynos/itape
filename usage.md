@@ -3,7 +3,8 @@
 ## SYNOPSIS
 
 `itape` [--help] [--fail] [--trace] [--debug]
-      [-h] <file>
+        [--leaked-handles[=<opts>] [--format-stack[=<opts>]]
+        [-h] <file>
 
 ## DESCRIPTION
 
