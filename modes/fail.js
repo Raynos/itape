@@ -4,10 +4,12 @@ module.exports = failMode;
 
 function failMode(ctx) {
     var whiteList = getFailingTests(ctx.tapOutput);
+    var env = {};
 
-    ctx.setTestEnvironment({
-        ITAPE_NPM_TAPE_WHITELIST: JSON.stringify(whiteList)
-    });
+    if (whiteList.length > 0) {
+        env.ITAPE_NPM_TAPE_WHITELIST = JSON.stringify(whiteList);
+    }
+    ctx.setTestEnvironment(env);
 
     ctx.setStdoutFilter(function stdoutFilter(chunk) {
         chunk = String(chunk);
@@ -23,7 +25,7 @@ function getFailingTests(tapOutput) {
 
     var tests = uniq(fails.map(function getTests(fail) {
         return tapOutput.tests[fail.test - 1];
-    }));
+    })).filter(Boolean);
 
     return tests.map(function toName(test) {
         return test.name;
