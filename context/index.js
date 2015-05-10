@@ -126,7 +126,17 @@ function reportChildTest(ctx, child) {
         // TODO. do not write to TAP file for invalid TAP.
         // i.e. a crashed uncaught exception child process.
         var writeStream = fs.createWriteStream(ctx._lastRunTapFile);
-        child.stdout.pipe(writeStream);
+        child.stdout.pipe(writeStream, {
+            end: false
+        });
+
+        child.on('exit', function onErr(code) {
+            if (code === 8) {
+                writeStream.write('not ok 999 process crashed\n');
+            }
+
+            writeStream.end();
+        });
     }
 }
 
