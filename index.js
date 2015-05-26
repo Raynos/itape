@@ -19,7 +19,7 @@ if (require.main === module) {
     main(parseArgs(process.argv.slice(2), {
         boolean: [
             'fail', 'trace', 'debug', 'help', 'h',
-            'leaked-handles', 'format-stack'
+            'leaked-handles', 'format-stack', 'color'
         ]
     }));
 }

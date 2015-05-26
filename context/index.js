@@ -42,7 +42,8 @@ function Context(argv) {
         shortHelp: argv.h,
         help: argv.help,
         leakedHandles: argv['leaked-handles'],
-        formatStack: argv['format-stack']
+        formatStack: argv['format-stack'],
+        color: argv.color === undefined ? true : argv.color
     };
     this.testProgram = argv._[0];
     this.lastFilePath = safeReadFile(this._lastFilePathFile);
@@ -96,6 +97,8 @@ function startChildTest(ctx) {
     if (ctx._debugMode) {
         args.unshift('debug');
     }
+
+    args.push('--color=' + ctx.options.color);
 
     var child = spawn('node', args, {
         cwd: $process.cwd(),
