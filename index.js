@@ -111,7 +111,7 @@ function printMode(mode, reason) {
 function printShortHelp() {
     console.log('usage: itape [--help] [--fail] [--trace] [--debug]');
     console.log('             [--leaked-handles[=<opts>] [--format-stack[=<opts>]]');
-    console.log('             [-h] <file>');
+    console.log('             [-h] [--color] <file>');
 }
 
 function printHelp() {

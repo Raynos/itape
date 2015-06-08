@@ -4,7 +4,7 @@
 
 `itape` [--help] [--fail] [--trace] [--debug]
         [--leaked-handles[=<opts>] [--format-stack[=<opts>]]
-        [-h] <file>
+        [-h] [--color] <file>
 
 ## DESCRIPTION
 
