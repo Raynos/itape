@@ -36,6 +36,10 @@ function traceMode(ctx) {
     }
 
     if (traceConfig.formatStack || ctx.options.formatStack) {
+        if (ctx.options.formatStack === 'long') {
+            ctx.options.formatStack = '{"traces":"long"}';
+        }
+
         var formatStackValue = configOrCli(
             traceConfig.formatStack, ctx.options.formatStack
         );
