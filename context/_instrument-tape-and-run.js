@@ -56,7 +56,7 @@ function instrumentTape(whiteList) {
     var $run = tapeTest.prototype.run;
     tapeTest.prototype.run = function fakeRun() {
         if (whiteList.indexOf(this.name) === -1) {
-            this._skip = true;
+            this._cb = null;
         }
         $run.apply(this, arguments);
     };
