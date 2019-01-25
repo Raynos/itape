@@ -1,6 +1,6 @@
 {
   "name": "itape",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "description": "Interactive tape test runner",
   "keywords": [],
   "author": "Raynos <raynos2@gmail.com>",
@@ -60,7 +60,6 @@
   "engine": {
     "node": ">= 0.8.x"
   },
-  "pre-commit": [
-  ],
+  "pre-commit": [],
   "ngen-version": "4.0.3"
 }
