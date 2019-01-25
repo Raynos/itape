@@ -16,12 +16,20 @@ function getTapFolderInfo() {
         return _cache;
     }
 
+    var regex;
+    if (path.sep === "\\") {
+        regex = new RegExp("\\\\", 'g');
+    } else {
+        regex = new RegExp(path.sep, 'g');
+    }
+
     var packageFolder = findPackage();
     var cacheFolder = path.join(
         getHomePath(),
         '.config',
         'itape',
-        packageFolder.replace(new RegExp(path.sep, 'g'), '%')
+        packageFolder.replace(regex, '%')
+            .replace(new RegExp(":", 'g'), '%')
     );
     mkdirp.sync(cacheFolder);
 
