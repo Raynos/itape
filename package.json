@@ -61,7 +61,6 @@
     "node": ">= 0.8.x"
   },
   "pre-commit": [
-    "jshint-pre-commit"
   ],
   "ngen-version": "4.0.3"
 }
