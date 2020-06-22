@@ -48,9 +48,20 @@ if (whiteList) {
 require(testProgram);
 
 function instrumentTape(whiteList) {
-    var tapeTestFile = resolve.sync('tape/lib/test', {
-        basedir: baseDir
-    });
+    var tapeTestFile
+    try {
+        tapeTestFile = resolve.sync('tape/lib/test', {
+            basedir: baseDir
+        });
+    } catch (origErr) {
+        try {
+            tapeTestFile = resolve.sync('@pre-bundled/tape/lib/test', {
+                basedir: baseDir
+            });
+        } catch (_) {
+            throw origErr
+        }
+    }
     var tapeTest = require(tapeTestFile);
 
     var $run = tapeTest.prototype.run;
